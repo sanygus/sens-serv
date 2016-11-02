@@ -2,16 +2,16 @@ const http = require('http');
 const db = require('./db');
 const url = require('url');
 const prepareData = require('./prepareData');//string in object in number and str
+const log = require('./log');
 let receivedData = {};
 
 http.createServer((req, resp) => {
   receivedData = url.parse(req.url, true).query;
   prepareData(receivedData, (err, preparedData) => {
-    console.log(preparedData);
     db.add(preparedData, (err/*, result*/) => {
-      /* log err */
+      if (err) { log(err); }
       db.getAll((err, docs) => {
-        // log err
+        if (err) { log(err); }
         console.log(docs);
       });
     })
