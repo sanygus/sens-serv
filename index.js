@@ -4,10 +4,9 @@ const url = require('url');
 const prepareData = require('./prepareData');//string in object in number and str
 const log = require('./log');
 const { httpPort } = require('./options');
-let receivedData = {};
 
 const handler = (req, resp) => {
-  receivedData = url.parse(req.url, true).query;
+  const receivedData = url.parse(req.url, true).query;
   prepareData(receivedData, (err, preparedData) => {
     if (err) { log(err); }
     if (preparedData) {
