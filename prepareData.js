@@ -4,7 +4,7 @@ module.exports = (data, callback) => {
   const newdata = {};
   let isData = false;
   for(key in data) {
-    if (key !== options.idDevKey) {
+    if ((key !== options.idDevKey) && (key !== 'date')) {
       if (data[key].indexOf(',') > 0) {
         newdata[key] = data[key].split(',').map((item) => {
           return parseFloat(item);
