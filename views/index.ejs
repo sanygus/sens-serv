@@ -1,4 +1,148 @@
-<b>prData</b>
-<% values.forEach((value) => { %>
-  <%= value.location %>
-<% }); %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SunPuter | Солнечный компьютер, интерфейс сбора данных</title>
+        <meta charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&amp;subset=cyrillic" rel="stylesheet">
+        <link rel="stylesheet" href="/static/main.css" />
+        <script src="/static/main.js"></script>
+    </head>
+    <body>
+      <div class="header">
+        <div class="mainContainer">
+
+          <a href="#" class="headerLogo">
+            Мониторинг солнечных компьютеров
+          </a>
+          <div class="headerMenu">
+
+          </div>
+        </div>
+      </div>
+      <div class="mainBody">
+        <div class="mainContainer">
+          <div class="sunPutersWr">
+          <% values.forEach((value) => { %>
+            <!-- ITEM -->
+            <div class="sunItem">
+              <div class="sunItemHeader">
+                <%= value.location %>
+              </div>
+              <div class="sunItemBody">
+                <table>
+                <% if (value.date) { %>
+                  <tr>
+                    <td>
+                      Актуальность
+                    </td>
+                    <td>
+                      <% 
+                        const newDateStr = value.date.substring(0, value.date.length - 1) + '+03:00';
+                        const dateTime = new Date(newDateStr);
+                      %>
+                      <%= dateTime.getDate() %>.<%= dateTime.getMonth()+1 %>.<%= dateTime.getFullYear() %> <%= dateTime.getHours() %>:<%= dateTime.getMinutes() %>:<%= dateTime.getSeconds() %>
+                    </td>
+                  </tr>
+                <% } %>
+                  <% if (values.gas1) { %>
+                    <tr>
+                      <td>
+                        Детектор газа - пропан-бутан
+                      </td>
+                      <td>
+                        <%= values.gas1[0] %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Детектор газа - метан
+                      </td>
+                      <td>
+                        <%= values.gas1[1] %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Детектор газа - дым
+                      </td>
+                      <td>
+                        <%= values.gas1[2] %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Детектор газа - водород
+                      </td>
+                      <td>
+                        <%= values.gas1[3] %>
+                      </td>
+                    </tr>
+                  <% } %>
+                  <% if (values.gas2) { %>
+                    <tr>
+                      <td>
+                        Детектор газа 2 - пропан-бутан
+                      </td>
+                      <td>
+                        <%= values.gas2[0] %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Детектор газа 2 - Метан
+                      </td>
+                      <td>
+                        <%= values.gas2[1] %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Детектор газа 2 - CO
+                      </td>
+                      <td>
+                        <%= values.gas2[2] %>
+                      </td>
+                    </tr>
+                  <% } %>
+                  <% if (values.temp) { %>
+                    <tr>
+                      <td>
+                        Температура
+                      </td>
+                      <td>
+                        <%= values.temp %> &deg;C
+                      </td>
+                    </tr>
+                  <% } %>
+                  <% if (values.press) { %>
+                    <tr>
+                      <td>
+                        Атм. давление
+                      </td>
+                      <td>
+                        <%= values.press %> &deg;C
+                      </td>
+                    </tr>
+                  <% } %>
+                </table>
+              </div>
+              <div class="sunItemMorePreWr">...</div>
+              <div class="sunItemMore">
+                <div class="moreBtn btn" onclick="itemizer(this)">
+                  Подробнее
+                </div>
+              </div>
+            </div>
+            <!-- /ITEM -->
+            <% }); %>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+          <div class="mainContainer">
+            &copy; ООО "Системная Интеграция"<br />
+            г. Чебоксары, 2016
+          </div>
+      </div>
+    </body>
+</html>
