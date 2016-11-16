@@ -37,20 +37,19 @@
                     </td>
                     <td>
                       <% 
-                        const newDateStr = value.date.substring(0, value.date.length - 1) + '+03:00';
-                        const dateTime = new Date(newDateStr);
+                        const dateTime = new Date(value.date);
                       %>
                       <%= dateTime.getDate() %>.<%= dateTime.getMonth()+1 %>.<%= dateTime.getFullYear() %> <%= dateTime.getHours() %>:<%= dateTime.getMinutes() %>:<%= dateTime.getSeconds() %>
                     </td>
                   </tr>
                 <% } %>
-                  <% if (values.gas1) { %>
+                  <% if (value.gas1) { %>
                     <tr>
                       <td>
                         Детектор газа - пропан-бутан
                       </td>
                       <td>
-                        <%= values.gas1[0] %>
+                        <%= value.gas1[0] %>
                       </td>
                     </tr>
                     <tr>
@@ -58,7 +57,7 @@
                         Детектор газа - метан
                       </td>
                       <td>
-                        <%= values.gas1[1] %>
+                        <%= value.gas1[1] %>
                       </td>
                     </tr>
                     <tr>
@@ -66,7 +65,7 @@
                         Детектор газа - дым
                       </td>
                       <td>
-                        <%= values.gas1[2] %>
+                        <%= value.gas1[2] %>
                       </td>
                     </tr>
                     <tr>
@@ -74,17 +73,17 @@
                         Детектор газа - водород
                       </td>
                       <td>
-                        <%= values.gas1[3] %>
+                        <%= value.gas1[3] %>
                       </td>
                     </tr>
                   <% } %>
-                  <% if (values.gas2) { %>
+                  <% if (value.gas2) { %>
                     <tr>
                       <td>
                         Детектор газа 2 - пропан-бутан
                       </td>
                       <td>
-                        <%= values.gas2[0] %>
+                        <%= value.gas2[0] %>
                       </td>
                     </tr>
                     <tr>
@@ -92,7 +91,7 @@
                         Детектор газа 2 - Метан
                       </td>
                       <td>
-                        <%= values.gas2[1] %>
+                        <%= value.gas2[1] %>
                       </td>
                     </tr>
                     <tr>
@@ -100,27 +99,27 @@
                         Детектор газа 2 - CO
                       </td>
                       <td>
-                        <%= values.gas2[2] %>
+                        <%= value.gas2[2] %>
                       </td>
                     </tr>
                   <% } %>
-                  <% if (values.temp) { %>
+                  <% if (value.temp) { %>
                     <tr>
                       <td>
                         Температура
                       </td>
                       <td>
-                        <%= values.temp %> &deg;C
+                        <%= value.temp %> &deg;C
                       </td>
                     </tr>
                   <% } %>
-                  <% if (values.press) { %>
+                  <% if (value.press) { %>
                     <tr>
                       <td>
                         Атм. давление
                       </td>
                       <td>
-                        <%= values.press %> &deg;C
+                        <%= value.press %> &deg;C
                       </td>
                     </tr>
                   <% } %>
