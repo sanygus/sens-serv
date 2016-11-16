@@ -39,7 +39,7 @@
                       <% 
                         const dateTime = new Date(value.date);
                       %>
-                      <%= dateTime.getDate() %>.<%= dateTime.getMonth()+1 %>.<%= dateTime.getFullYear() %> <%= dateTime.getHours() %>:<%= dateTime.getMinutes() %>:<%= dateTime.getSeconds() %>
+                      <%= dateTime.toLocaleString() %>
                     </td>
                   </tr>
                 <% } %>
@@ -88,7 +88,7 @@
                     </tr>
                     <tr>
                       <td>
-                        Детектор газа 2 - Метан
+                        Детектор газа 2 - метан
                       </td>
                       <td>
                         <%= value.gas2[1] %>
@@ -119,7 +119,17 @@
                         Атм. давление
                       </td>
                       <td>
-                        <%= value.press %> &deg;C
+                        <%= value.press %> мм.рт.ст.
+                      </td>
+                    </tr>
+                  <% } %>
+                  <% if (value.mic) { %>
+                    <tr>
+                      <td>
+                        Шум
+                      </td>
+                      <td>
+                        <%= value.mic %> (0-1023)
                       </td>
                     </tr>
                   <% } %>
