@@ -1,1 +1,1 @@
-require('./webServer');
+require('./server');

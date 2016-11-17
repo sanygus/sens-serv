@@ -5,19 +5,7 @@ const log = require('./log');
 const { httpPort } = require('./options');
 
 const server = express();
-server.use('/static', express.static('static'));
-server.set('view engine', 'ejs');
 
-server.get('/', (req, res) => {
-  db.getLastValues((err, values) => {
-    if (err) {
-      log(err);
-      res.status(500).render('error');
-    } else {
-      res.render('index', { values });
-    }
-  });
-});
 server.get('/dev', (req, res) => {
   prepareData(req.query, (err, preparedData) => {
     if (err) { log(err); }
