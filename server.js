@@ -3,6 +3,7 @@ const exec = require('child_process').exec;
 const db = require('./db');
 const prepareData = require('./prepareData');
 const log = require('./log');
+const fs = require('fs');
 const { httpPort } = require('./options');
 
 const server = express();
@@ -24,6 +25,12 @@ server.get('/dev', (req, res) => {
     } else {
       res.type('application/json').status(400).send({status: 'no data'});
     }
+  });
+});
+
+server.get('/log', (req, res) => {
+  fs.appendFile("cams.log", JSON.stringify(req.query), (err) => {
+    log(err);
   });
 });
 
