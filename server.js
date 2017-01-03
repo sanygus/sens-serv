@@ -29,8 +29,9 @@ server.get('/dev', (req, res) => {
 });
 
 server.get('/log', (req, res) => {
-  fs.appendFile("cams.log", JSON.stringify(req.query), (err) => {
+  fs.appendFile("cams.log", JSON.stringify(req.query) + '\n', (err) => {
     log(err);
+    res.type('application/json').status(202).send({status: 'ok'});
   });
 });
 
