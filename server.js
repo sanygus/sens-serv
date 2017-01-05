@@ -29,10 +29,18 @@ server.get('/dev', (req, res) => {
 });
 
 server.get('/log', (req, res) => {
-  fs.appendFile("cams.log", JSON.stringify(req.query) + '\n', (err) => {
-    log(err);
-    res.type('application/json').status(202).send({status: 'ok'});
-  });
+  if (req.query) {
+    db.addEvent(req.query, (err) => {
+      if (err) {
+        log(err);
+        res.type('application/json').status(500).send({status: 'can\'t save event in DB'});
+      } else {
+        res.type('application/json').status(202).send({status: 'ok'});
+      }
+    });
+  } else {
+    res.type('application/json').status(400).send({status: 'no data'});
+  }
 });
 
 server.listen(httpPort, () => {
