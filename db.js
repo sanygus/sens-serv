@@ -52,7 +52,7 @@ module.exports.getLastValues = (callback) => {
               ).toArray((err, lastDocs) => {
                 if (err) { callbackP(err); } else {
                   if (lastDocs.length <=1) {
-                    let result = {};
+                    let result = null;
                     if (lastDocs.length === 1) {
                       result = lastDocs.slice()[0];
                       delete result[options.idDevKey];
@@ -67,6 +67,7 @@ module.exports.getLastValues = (callback) => {
             status: (callbackP) => {
               const search = {};// search by type/event
               search[options.idDevKey] = devObj[options.idDevKey];
+              search.event = { $in: ['wakeup', 'sleep'] };
               dataBase.collection(dbCollectEvents).find(
                 search,
                 { '_id': false },
@@ -77,7 +78,7 @@ module.exports.getLastValues = (callback) => {
               ).toArray((err, lastStat) => {
                 if (err) { callbackP(err); } else {
                   if (lastStat.length <=1) {
-                    let result = {};
+                    let result = null;
                     if (lastStat.length === 1) {
                       result = lastStat.slice()[0];
                       delete result[options.idDevKey];
@@ -85,6 +86,32 @@ module.exports.getLastValues = (callback) => {
                     callbackP(null, result);
                   } else {
                     callbackP(new Error('more 1 stat records on limit'));
+                  }
+                }
+              });
+            },
+            warn: (callbackP) => {
+              const search = {};// search by type/event
+              search[options.idDevKey] = devObj[options.idDevKey];
+              search.event = 'warn';
+              dataBase.collection(dbCollectEvents).find(
+                search,
+                { '_id': false },
+                {
+                  'limit': 1,
+                  'sort': [['date', 'desc']]
+                }
+              ).toArray((err, lastStat) => {
+                if (err) { callbackP(err); } else {
+                  if (lastStat.length <=1) {
+                    let result = null;
+                    if (lastStat.length === 1) {
+                      result = lastStat.slice()[0];
+                      delete result[options.idDevKey];
+                    }
+                    callbackP(null, result);
+                  } else {
+                    callbackP(new Error('more 1 stat warn records on limit'));
                   }
                 }
               });
