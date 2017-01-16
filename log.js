@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 module.exports = (obj) => {
   if (obj) {
     const prefix = (new Date).toISOString() + '    ';
@@ -11,6 +13,8 @@ module.exports = (obj) => {
         out = JSON.stringify(obj);
       }
     }
-    console.log(prefix + out);
+    fs.appendFile("srv.log", prefix + out + '\n', (err) => {
+      if (err) { console.log(err); }
+    });
   }
 }

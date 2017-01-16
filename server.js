@@ -4,7 +4,7 @@ const db = require('./db');
 const prepareData = require('./prepareData');
 const log = require('./log');
 const fs = require('fs');
-const { httpPort } = require('./options');
+const { httpPort, servicePath } = require('./options');
 
 const server = express();
 
@@ -41,6 +41,18 @@ server.get('/log', (req, res) => {
   } else {
     res.type('application/json').status(400).send({status: 'no data'});
   }
+});
+
+server.get('/' + servicePath + '/:filename', (req, res) => {
+  const fileName = req.params.filename;
+  res.sendFile(fileName, { root: __dirname + '/' + servicePath + '/' }, (err) => {
+    if (err) {
+      res.status(err.status).end();
+    } else {
+      log('dev download ' + servicePath + '/'  + fileName);
+      fs.rename(__dirname + '/' + servicePath + '/' + fileName, __dirname + '/' + servicePath + '/' + fileName + '.ok', () => {});
+    }
+  });
 });
 
 server.listen(httpPort, () => {
