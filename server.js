@@ -1,5 +1,4 @@
 const express = require('express');
-const exec = require('child_process').exec;
 const db = require('./db');
 const prepareData = require('./prepareData');
 const log = require('./log');
@@ -18,8 +17,6 @@ server.get('/dev', (req, res) => {
           res.type('application/json').status(500).send({status: 'can\'t save in DB'});
         } else {
           res.type('application/json').status(202).send({status: 'ok'});
-          const num = preparedData.iddev.substr(-1, 1);
-          exec('./photo.sh ' + num);
         }
       });
     } else {
