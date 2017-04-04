@@ -58,6 +58,7 @@ server.get('/watch', (req, res) => {
     if (req.query.action === 'get') {
       if (devStatus[req.query[idDevKey]] === undefined) { devStatus[req.query[idDevKey]] = 0; }
       res.type('text/plain').status(200).send(devStatus[req.query[idDevKey]].toString());
+      devStatus[req.query[idDevKey]] = 0;
     } else if ((req.query.action === 'set') && (req.query.status)) {
       devStatus[req.query[idDevKey]] = parseInt(req.query.status);
       res.type('text/plain').status(200).send({ status: 'ok' });
