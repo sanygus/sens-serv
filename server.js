@@ -3,9 +3,10 @@ const db = require('./db');
 const prepareData = require('./prepareData');
 const log = require('./log');
 const fs = require('fs');
-const { httpPort, servicePath } = require('./options');
+const { httpPort, idDevKey, servicePath } = require('./options');
 
 const server = express();
+const devStatus = {};//0 - nothing, 1 - wakeup, 2 - reboot
 
 server.get('/dev', (req, res) => {
   prepareData(req.query, (err, preparedData) => {
@@ -50,6 +51,22 @@ server.get('/' + servicePath + '/:filename', (req, res) => {
       fs.rename(__dirname + '/' + servicePath + '/' + fileName, __dirname + '/' + servicePath + '/' + fileName + '.ok', () => {});
     }
   });
+});
+
+server.get('/watch', (req, res) => {
+  if ((req.query[idDevKey]) && (req.query.action)) {
+    if (req.query.action === 'get') {
+      if (devStatus[req.query[idDevKey]] === undefined) { devStatus[req.query[idDevKey]] = 0; }
+      res.type('text/plain').status(200).send(devStatus[req.query[idDevKey]].toString());
+    } else if ((req.query.action === 'set') && (req.query.status)) {
+      devStatus[req.query[idDevKey]] = parseInt(req.query.status);
+      res.type('text/plain').status(200).send({ status: 'ok' });
+    } else {
+      res.type('application/json').status(500).send({ status: 'error2' });
+    }
+  } else {
+    res.type('application/json').status(500).send({ status: 'error' });
+  }
 });
 
 server.listen(httpPort, () => {
