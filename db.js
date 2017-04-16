@@ -154,7 +154,7 @@ module.exports.addDevice = (idDevice, locationDevice/*, callback*/) => {
 }
 
 const getAllDevices = (callback) => {
-  dataBase.collection(dbCollectDevices).find({}).toArray(callback);
+  dataBase.collection(dbCollectDevices).find({}, { '_id': false }, { 'sort': 'order' }).toArray(callback);
 }
 
 module.exports.getAllDevices = getAllDevices;

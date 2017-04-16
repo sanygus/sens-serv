@@ -61,7 +61,8 @@ server.get('/watch', (req, res) => {
       devStatus[req.query[idDevKey]] = 0;
     } else if ((req.query.action === 'set') && (req.query.status)) {
       devStatus[req.query[idDevKey]] = parseInt(req.query.status);
-      res.type('text/plain').status(200).send({ status: 'ok' });
+      res.setHeader("Access-Control-Allow-Origin: http://geoworks.pro");
+      res.type('application/json').status(200).send({ status: 'ok' });
     } else {
       res.type('application/json').status(500).send({ status: 'error2' });
     }
