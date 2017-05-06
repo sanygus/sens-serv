@@ -20,5 +20,6 @@ module.exports = (data, callback) => {
   if (!isData) {
     return callback(new Error('no data in query'));
   }
+  newdata.receive_date = new Date();
   callback(null, newdata);
 }
